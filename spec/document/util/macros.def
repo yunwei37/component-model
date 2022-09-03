@@ -1,0 +1,388 @@
+.. |tyvar| mathdef:: \alpha
+.. |tyvarb| mathdef:: \beta
+
+.. |tyctx| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\Gamma}
+.. |TCVALUES| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{values}}
+.. |TCTYPES| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{types}}
+.. |TCRTYPES| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{rtypes}}
+.. |TCUVARS| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{uvars}}
+.. |TCEVARS| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{evars}}
+.. |TCFUNCS| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{funcs}}
+.. |TCINSTANCES| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{instances}}
+.. |TCCOMPONENTS| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{components}}
+.. |TCCORE| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{core}}
+.. |TCPARENT| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{parent}}
+.. |RTPARENT| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{parent}}
+.. |RTMOD| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{mod}}
+.. |RTSTATE| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{state}}
+.. |RTMODS| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{mods}}
+.. |RTCOMPS| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{comps}}
+.. |RTINSTS| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{insts}}
+.. |RTCINSTS| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{cinsts}}
+.. |RTCEXPORTS| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{cexports}}
+.. |RTVALUES| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{values}}
+.. |RTTYPES| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{types}}
+.. |RTCTYPES| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{ctypes}}
+.. |RTFUNCS| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{funcs}}
+.. |RTCFUNCS| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{cfuncs}}
+.. |RTTABLES| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{tables}}
+.. |RTMEMS| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{mems}}
+.. |RTGLOBALS| mathdef:: \xref{valid/conventions}{syntax-tyctx}{\K{globals}}
+
+.. |subtypeof| mathdef:: \preccurlyeq
+
+.. |valtype| mathdef:: \xref{syntax/types}{syntax-valtype}{\X{valtype}}
+.. |VTPRIM| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{prim}}
+.. |VTBORROW| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{borrow}}
+.. |VTOWN| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{own}}
+.. |VTRESULT| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{result}}
+.. |VTOPTION| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{option}}
+.. |VTUNION| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{union}}
+.. |VTENUM| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{enum}}
+.. |VTFLAGS| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{flags}}
+.. |VTTUPLE| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{tuple}}
+.. |VTLIST| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{list}}
+.. |VTVARIANT| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{variant}}
+.. |VTRECORD| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{record}}
+
+.. |primvaltype| mathdef:: \xref{syntax/types}{syntax-primvaltype}{\X{primvaltype}}
+.. |VTSTRING| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{string}}
+.. |VTCHAR| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{char}}
+.. |VTFLOAT64| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{float64}}
+.. |VTFLOAT32| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{float32}}
+.. |VTU64| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{u64}}
+.. |VTS64| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{s64}}
+.. |VTU32| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{u32}}
+.. |VTS32| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{s32}}
+.. |VTU16| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{u16}}
+.. |VTS16| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{s16}}
+.. |VTU8| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{u8}}
+.. |VTS8| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{s8}}
+.. |VTBOOL| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{bool}}
+
+.. |recordfield| mathdef:: \xref{syntax/types}{syntax-recordcase}{\X{record\_field}}
+.. |RFTYPE| mathdef:: \xref{syntax/types}{syntax-recordcase}{\K{type}}
+.. |RFNAME| mathdef:: \xref{syntax/types}{syntax-recordcase}{\K{name}}
+
+.. |variantcase| mathdef:: \xref{syntax/types}{syntax-variantcase}{\X{variant\_case}}
+.. |VCREFINES| mathdef:: \xref{syntax/types}{syntax-variantcase}{\K{refines}}
+.. |VCTYPE| mathdef:: \xref{syntax/types}{syntax-variantcase}{\K{type}}
+.. |VCNAME| mathdef:: \xref{syntax/types}{syntax-variantcase}{\K{name}}
+
+.. |resourcetype| mathdef:: \xref{syntax/types}{syntax-resourcetype}{\X{resourcetype}}
+.. |RTREP| mathdef:: \xref{syntax/types}{syntax-resourcetype}{\K{rep}}
+.. |RTDTOR| mathdef:: \xref{syntax/types}{syntax-resourcetype}{\K{dtor}}
+
+.. |functype| mathdef:: \xref{syntax/types}{syntax-functype}{\X{functype}}
+.. |RESULTS| mathdef:: \xref{syntax/types}{syntax-functype}{\K{results}}
+.. |PARAMS| mathdef:: \xref{syntax/types}{syntax-functype}{\K{params}}
+
+.. |funclist| mathdef:: \xref{syntax/types}{syntax-funclist}{\X{func\_list}}
+
+.. |resulttype| mathdef:: \xref{syntax/types}{syntax-resulttype}{\X{resulttype}}
+.. |RTTYPE| mathdef:: \xref{syntax/types}{syntax-resulttype}{\K{type}}
+.. |RTNAME| mathdef:: \xref{syntax/types}{syntax-resulttype}{\K{name}}
+
+.. |instancetype| mathdef:: \xref{syntax/types}{syntax-instancetype}{\X{instancetype}}
+
+.. |instancedecl| mathdef:: \xref{syntax/types}{syntax-instancedecl}{\X{instancedecl}}
+.. |IDALIAS| mathdef:: \xref{syntax/types}{syntax-instancedecl}{\K{alias}}
+.. |IDEXPORT| mathdef:: \xref{syntax/types}{syntax-instancedecl}{\K{export}}
+.. |IDTYPE| mathdef:: \xref{syntax/types}{syntax-instancedecl}{\K{type}}
+.. |IDCORETYPE| mathdef:: \xref{syntax/types}{syntax-instancedecl}{\K{core\_type}}
+
+.. |exportdecl| mathdef:: \xref{syntax/types}{syntax-exportdecl}{\X{exportdecl}}
+.. |EDNAME| mathdef:: \xref{syntax/types}{syntax-exportdecl}{\K{name}}
+.. |EDDESC| mathdef:: \xref{syntax/types}{syntax-exportdecl}{\K{desc}}
+
+.. |externdesc| mathdef:: \xref{syntax/types}{syntax-externdesc}{\X{externdesc}}
+.. |EDCOMPONENT| mathdef:: \xref{syntax/types}{syntax-externdesc}{\K{component}}
+.. |EDINSTANCE| mathdef:: \xref{syntax/types}{syntax-externdesc}{\K{instance}}
+.. |EDTYPE| mathdef:: \xref{syntax/types}{syntax-externdesc}{\K{type}}
+.. |EDVALUE| mathdef:: \xref{syntax/types}{syntax-externdesc}{\K{value}}
+.. |EDFUNC| mathdef:: \xref{syntax/types}{syntax-externdesc}{\K{func}}
+.. |EDCOREMODULE| mathdef:: \xref{syntax/types}{syntax-externdesc}{\K{core\_module}}
+
+
+.. |typebound| mathdef:: \xref{syntax/types}{syntax-typebound}{\X{typebound}}
+.. |TBEQ| mathdef:: \xref{syntax/types}{syntax-typebound}{\K{EQ}}
+.. |TBSUBR| mathdef:: \xref{syntax/types}{syntax-typebound}{\K{SUB~resource}}
+
+.. |defvaltype| mathdef:: \xref{syntax/types}{syntax-defvaltype}{\X{defvaltype}}
+
+.. |alias| mathdef:: \xref{syntax/types}{syntax-alias}{\X{alias}}
+.. |ATARGET| mathdef:: \xref{syntax/types}{syntax-alias}{\K{target}}
+.. |ASORT| mathdef:: \xref{syntax/types}{syntax-alias}{\K{sort}}
+
+.. |componenttype| mathdef:: \xref{syntax/types}{syntax-componenttype}{\X{componenttype}}
+
+.. |componentdecl| mathdef:: \xref{syntax/types}{syntax-componentdecl}{\X{componentdecl}}
+.. |CDIMPORT| mathdef:: \xref{syntax/types}{syntax-componentdecl}{\K{import}}
+
+.. |importdecl| mathdef:: \xref{syntax/types}{syntax-importdecl}{\X{importdecl}}
+.. |IDDESC| mathdef:: \xref{syntax/types}{syntax-importdecl}{\K{desc}}
+.. |IDNAME| mathdef:: \xref{syntax/types}{syntax-importdecl}{\K{name}}
+
+
+.. |deftype| mathdef:: \xref{syntax/types}{syntax-deftype}{\X{deftype}}
+
+.. |coremoduleidx| mathdef:: \xref{syntax/components}{syntax-coremoduleidx}{\X{core{:}moduleidx}}
+.. |coreinstanceidx| mathdef:: \xref{syntax/components}{syntax-coreinstanceidx}{\X{core{:}instanceidx}}
+.. |componentidx| mathdef:: \xref{syntax/components}{syntax-componentidx}{\X{componentidx}}
+.. |instanceidx| mathdef:: \xref{syntax/components}{syntax-instanceidx}{\X{instanceidx}}
+.. |funcidx| mathdef:: \xref{syntax/components}{syntax-funcidx}{\X{funcidx}}
+.. |corefuncidx| mathdef:: \xref{syntax/components}{syntax-corefuncidx}{\X{core{:}funcidx}}
+.. |typeidx| mathdef:: \xref{syntax/components}{syntax-typeidx}{\X{typeidx}}
+.. |coretypeidx| mathdef:: \xref{syntax/components}{syntax-coretypeidx}{\X{core{:}typeidx}}
+.. |valueidx| mathdef:: \xref{syntax/components}{syntax-valueidx}{\X{valueidx}}
+
+.. |coresortidx| mathdef:: \xref{syntax/components}{syntax-coresortidx}{\X{core{:}sortidx}}
+.. |CSIIDX| mathdef:: \xref{syntax/components}{syntax-coretypeidx}{\K{idx}}
+.. |CSISORT| mathdef:: \xref{syntax/components}{syntax-coretypeidx}{\K{sort}}
+.. |sortidx| mathdef:: \xref{syntax/components}{syntax-sortidx}{\X{sortidx}}
+.. |SIIDX| mathdef:: \xref{syntax/components}{syntax-sortidx}{\K{idx}}
+.. |SISORT| mathdef:: \xref{syntax/components}{syntax-sortidx}{\K{sort}}
+
+
+.. |coresort| mathdef:: \xref{syntax/components}{syntax-coresort}{\X{core{:}sort}}
+.. |CSINSTANCE| mathdef:: \xref{syntax/components}{syntax-coresort}{\K{instance}}
+.. |CSMODULE| mathdef:: \xref{syntax/components}{syntax-coresort}{\K{module}}
+.. |CSTYPE| mathdef:: \xref{syntax/components}{syntax-coresort}{\K{type}}
+.. |CSGLOBAL| mathdef:: \xref{syntax/components}{syntax-coresort}{\K{global}}
+.. |CSMEMORY| mathdef:: \xref{syntax/components}{syntax-coresort}{\K{memory}}
+.. |CSTABLE| mathdef:: \xref{syntax/components}{syntax-coresort}{\K{table}}
+.. |CSFUNC| mathdef:: \xref{syntax/components}{syntax-coresort}{\K{func}}
+
+
+.. |sort| mathdef:: \xref{syntax/components}{syntax-sort}{\X{sort}}
+.. |SINSTANCE| mathdef:: \xref{syntax/components}{syntax-sort}{\K{instance}}
+.. |SCOMPONENT| mathdef:: \xref{syntax/components}{syntax-sort}{\K{component}}
+.. |STYPE| mathdef:: \xref{syntax/components}{syntax-sort}{\K{type}}
+.. |SVALUE| mathdef:: \xref{syntax/components}{syntax-sort}{\K{value}}
+.. |SFUNC| mathdef:: \xref{syntax/components}{syntax-sort}{\K{func}}
+.. |SCORE| mathdef:: \xref{syntax/components}{syntax-sort}{\K{core}}
+
+
+.. |definition| mathdef:: \xref{syntax/components}{syntax-definition}{\X{definition}}
+.. |DEXPORT| mathdef:: \xref{syntax/components}{syntax-definition}{\K{export}}
+.. |DIMPORT| mathdef:: \xref{syntax/components}{syntax-definition}{\K{import}}
+.. |DSTART| mathdef:: \xref{syntax/components}{syntax-definition}{\K{start}}
+.. |DCANON| mathdef:: \xref{syntax/components}{syntax-definition}{\K{canon}}
+.. |DTYPE| mathdef:: \xref{syntax/components}{syntax-definition}{\K{type}}
+.. |DALIAS| mathdef:: \xref{syntax/components}{syntax-definition}{\K{alias}}
+.. |DINSTANCE| mathdef:: \xref{syntax/components}{syntax-definition}{\K{instance}}
+.. |DCOMPONENT| mathdef:: \xref{syntax/components}{syntax-definition}{\K{component}}
+.. |DCORETYPE| mathdef:: \xref{syntax/components}{syntax-definition}{\K{core\_type}}
+.. |DCOREINSTANCE| mathdef:: \xref{syntax/components}{syntax-definition}{\K{core\_instance}}
+.. |DCOREMODULE| mathdef:: \xref{syntax/components}{syntax-definition}{\K{core\_module}}
+
+
+.. |coreinstance| mathdef:: \xref{syntax/components}{syntax-coreinstance}{\X{core{:}instance}}
+.. |CIEXPORTS| mathdef:: \xref{syntax/components}{syntax-coreinstance}{\K{exports}}
+.. |CIINSTANTIATE| mathdef:: \xref{syntax/components}{syntax-coreinstance}{\K{instantiate}}
+
+
+.. |coreinstantiatearg| mathdef:: \xref{syntax/components}{syntax-coreinstantiatearg}{\X{core{:}instantiatearg}}
+.. |CIAINSTANCE| mathdef:: \xref{syntax/components}{syntax-coreinstantiatearg}{\K{instance}}
+.. |CIANAME| mathdef:: \xref{syntax/components}{syntax-coreinstantiatearg}{\K{name}}
+
+
+.. |coreexport| mathdef:: \xref{syntax/components}{syntax-coreexport}{\X{core{:}export}}
+.. |CEDEF| mathdef:: \xref{syntax/components}{syntax-coreexport}{\K{def}}
+.. |CENAME| mathdef:: \xref{syntax/components}{syntax-coreexport}{\K{name}}
+
+.. |coredeftype| mathdef:: \xref{syntax/types}{syntax-coredeftype}{\X{core{:}deftype}}
+
+.. |coremoduletype| mathdef:: \xref{syntax/types}{syntax-coremoduletype}{\X{core{:}moduletype}}
+
+.. |coreimportdecl| mathdef:: \xref{syntax/types}{syntax-coreimportdecl}{\X{core{:}importdecl}}
+
+.. |coreexportdecl| mathdef:: \xref{syntax/types}{syntax-coreexportdecl}{\X{core{:}exportdecl}}
+.. |CEDDESC| mathdef:: \xref{syntax/types}{syntax-coreexportdecl}{\K{desc}}
+.. |CEDNAME| mathdef:: \xref{syntax/types}{syntax-coreexportdecl}{\K{name}}
+
+
+.. |corealias| mathdef:: \xref{syntax/types}{syntax-corealias}{\X{core{:}alias}}
+.. |CATARGET| mathdef:: \xref{syntax/types}{syntax-corealias}{\K{target}}
+.. |CASORT| mathdef:: \xref{syntax/types}{syntax-corealias}{\K{sort}}
+
+
+.. |corealiastarget| mathdef:: \xref{syntax/types}{syntax-corealiastarget}{\X{corealiastarget}}
+.. |CATOUTER| mathdef:: \xref{syntax/types}{syntax-corealiastarget}{\K{outer}}
+
+
+.. |aliastarget| mathdef:: \xref{syntax/components}{syntax-aliastarget}{\X{aliastarget}}
+.. |ATOUTER| mathdef:: \xref{syntax/components}{syntax-aliastarget}{\K{outer}}
+.. |ATCOREEXPORT| mathdef:: \xref{syntax/components}{syntax-aliastarget}{\K{core\_export}}
+.. |ATEXPORT| mathdef:: \xref{syntax/components}{syntax-aliastarget}{\K{export}}
+
+
+.. |coremoduledecl| mathdef:: \xref{syntax/types}{syntax-coremoduledecl}{\X{coremoduledecl}}
+
+
+.. |component| mathdef:: \xref{syntax/components}{syntax-component}{\X{component}}
+
+
+.. |instance| mathdef:: \xref{syntax/components}{syntax-instance}{\X{instance}}
+.. |IEXPORTS| mathdef:: \xref{syntax/components}{syntax-instance}{\K{exports}}
+.. |IINSTANTIATE| mathdef:: \xref{syntax/components}{syntax-instance}{\K{instantiate}}
+
+
+.. |export| mathdef:: \xref{syntax/components}{syntax-export}{\X{export}}
+.. |EDEF| mathdef:: \xref{syntax/components}{syntax-export}{\K{def}}
+.. |ENAME| mathdef:: \xref{syntax/components}{syntax-export}{\K{name}}
+
+.. |instantiatearg| mathdef:: \xref{syntax/components}{syntax-instantiatearg}{\X{instantiatearg}}
+.. |IAARG| mathdef:: \xref{syntax/components}{syntax-instantiatearg}{\K{arg}}
+.. |IANAME| mathdef:: \xref{syntax/components}{syntax-instantiatearg}{\K{name}}
+
+
+.. |canon| mathdef:: \xref{syntax/components}{syntax-canon}{\X{canon}}
+.. |CLOWER| mathdef:: \xref{syntax/components}{syntax-canon}{\K{lower}}
+.. |CLIFT| mathdef:: \xref{syntax/components}{syntax-canon}{\K{lift}}
+
+
+.. |canonopt| mathdef:: \xref{syntax/components}{syntax-canonopt}{\X{canonopt}}
+.. |COPOSTRETURN| mathdef:: \xref{syntax/components}{syntax-canonopt}{\K{post\_return}}
+.. |COREALLOC| mathdef:: \xref{syntax/components}{syntax-canonopt}{\K{realloc}}
+.. |COMEMORY| mathdef:: \xref{syntax/components}{syntax-canonopt}{\K{memory}}
+.. |COSTRINGENCODINGLATIN1UTF16| mathdef:: \xref{syntax/components}{syntax-canonopt}{\K{string\_encoding\_latin1{+}utf16}}
+.. |COSTRINGENCODINGUTF16| mathdef:: \xref{syntax/components}{syntax-canonopt}{\K{string\_encoding\_utf16}}
+.. |COSTRINGENCODINGUTF8| mathdef:: \xref{syntax/components}{syntax-canonopt}{\K{string\_encoding\_utf8}}
+
+.. |import| mathdef:: \xref{syntax/components}{syntax-import}{\X{import}}
+
+
+.. |start| mathdef:: \xref{syntax/components}{syntax-start}{\X{start}}
+.. |FARGS| mathdef:: \xref{syntax/components}{syntax-start}{\K{args}}
+.. |FFUNC| mathdef:: \xref{syntax/components}{syntax-start}{\K{func}}
+
+
+.. |coretyctx| mathdef:: \xref{valid/conventions}{syntax-coretyctx}{\Gamma_c}
+.. |CTCINSTANCES| mathdef:: \xref{valid/conventions}{syntax-coretyctx}{\K{instances}}
+.. |CTCMODULES| mathdef:: \xref{valid/conventions}{syntax-coretyctx}{\K{modules}}
+.. |CTCCOMPONENTS| mathdef:: \xref{valid/conventions}{syntax-coretyctx}{\K{components}}
+.. |CTCGLOBALS| mathdef:: \xref{valid/conventions}{syntax-coretyctx}{\K{globals}}
+.. |CTCMEMS| mathdef:: \xref{valid/conventions}{syntax-coretyctx}{\K{mems}}
+.. |CTCTABLES| mathdef:: \xref{valid/conventions}{syntax-coretyctx}{\K{tables}}
+.. |CTCFUNCS| mathdef:: \xref{valid/conventions}{syntax-coretyctx}{\K{funcs}}
+.. |CTCTYPES| mathdef:: \xref{valid/conventions}{syntax-coretyctx}{\K{types}}
+
+
+.. |evaltype| mathdef:: \xref{valid/types}{syntax-evaltype}{\X{valtype}_e}
+.. |EVTLIST| mathdef:: \xref{valid/types}{syntax-evaltype}{\K{list}}
+.. |EVTCHAR| mathdef:: \xref{valid/types}{syntax-evaltype}{\K{char}}
+.. |EVTFLOAT64| mathdef:: \xref{valid/types}{syntax-evaltype}{\K{float64}}
+.. |EVTFLOAT32| mathdef:: \xref{valid/types}{syntax-evaltype}{\K{float32}}
+.. |EVTU64| mathdef:: \xref{valid/types}{syntax-evaltype}{\K{u64}}
+.. |EVTS64| mathdef:: \xref{valid/types}{syntax-evaltype}{\K{s64}}
+.. |EVTU32| mathdef:: \xref{valid/types}{syntax-evaltype}{\K{u32}}
+.. |EVTS32| mathdef:: \xref{valid/types}{syntax-evaltype}{\K{s32}}
+.. |EVTU16| mathdef:: \xref{valid/types}{syntax-evaltype}{\K{u16}}
+.. |EVTS16| mathdef:: \xref{valid/types}{syntax-evaltype}{\K{s16}}
+.. |EVTU8| mathdef:: \xref{valid/types}{syntax-evaltype}{\K{u8}}
+.. |EVTS8| mathdef:: \xref{valid/types}{syntax-evaltype}{\K{s8}}
+.. |EVTBOOL| mathdef:: \xref{valid/types}{syntax-evaltype}{\K{bool}}
+.. |evaltype2| mathdef:: \evaltype
+.. |EVTVARIANT| mathdef:: \xref{valid/types}{syntax-evaltype2}{\K{variant}}
+.. |EVTRECORD| mathdef:: \xref{valid/types}{syntax-evaltype2}{\K{record}}
+.. |EVTOWN| mathdef:: \xref{valid/types}{syntax-evaltype2}{\K{own}}
+.. |EVTREF| mathdef:: \xref{valid/types}{syntax-evaltype2}{\K{ref}}
+
+.. |refscope| mathdef:: \xref{valid/types}{syntax-refscope}{\X{scope}}
+.. |RSCALL| mathdef:: \xref{valid/types}{syntax-refscope}{\K{call}}
+
+.. |evaltypead| mathdef:: \xref{valid/types}{syntax-evaltypead}{{\X{valtype}_e^?}}
+.. |einstancetypead| mathdef:: \xref{valid/types}{syntax-einstancetypead}{{\X{instancetype}_e^?}}
+.. |eexterndeclad| mathdef:: \xref{valid/types}{syntax-eexterndeclad}{{\X{externdecl}_e^?}}
+
+
+.. |erecordfield| mathdef:: \xref{valid/types}{syntax-erecordfield}{\X{record\_field}_e}
+.. |ERFTYPE| mathdef:: \xref{valid/types}{syntax-erecordfield}{\K{type}}
+.. |ERFNAME| mathdef:: \xref{valid/types}{syntax-erecordfield}{\K{name}}
+
+
+.. |evariantcase| mathdef:: \xref{valid/types}{syntax-evariantcase}{\X{variant\_case}_e}
+.. |EVCREFINES| mathdef:: \xref{valid/types}{syntax-evariantcase}{\K{refines}}
+.. |EVCTYPE| mathdef:: \xref{valid/types}{syntax-evariantcase}{\K{type}}
+.. |EVCNAME| mathdef:: \xref{valid/types}{syntax-evariantcase}{\K{name}}
+
+
+.. |vcctx| mathdef:: \xref{valid/types}{syntax-vcctx}{\X{vcctx}}
+.. |VCCCASES| mathdef:: \xref{valid/types}{syntax-vcctx}{\K{cases}}
+.. |VCCCTX| mathdef:: \xref{valid/types}{syntax-vcctx}{\K{ctx}}
+
+
+.. |eresulttype| mathdef:: \xref{valid/types}{syntax-eresulttype}{\X{resulttype}_e}
+.. |ERTTYPE| mathdef:: \xref{valid/types}{syntax-eresulttype}{\K{type}}
+.. |ERTNAME| mathdef:: \xref{valid/types}{syntax-eresulttype}{\K{name}}
+
+
+.. |efunctype| mathdef:: \xref{valid/types}{syntax-efunctype}{\X{functype}_e}
+
+.. |eexterndesc| mathdef:: \xref{valid/types}{syntax-eexterndesc}{\X{externdesc}_e}
+.. |EEMDCOMPONENT| mathdef:: \xref{valid/types}{syntax-eexterndesc}{\K{component}}
+.. |EEMDINSTANCE| mathdef:: \xref{valid/types}{syntax-eexterndesc}{\K{instance}}
+.. |EEMDTYPE| mathdef:: \xref{valid/types}{syntax-eexterndesc}{\K{type}}
+.. |EEMDVALUE| mathdef:: \xref{valid/types}{syntax-eexterndesc}{\K{value}}
+.. |EEMDFUNC| mathdef:: \xref{valid/types}{syntax-eexterndesc}{\K{func}}
+.. |EEMDCOREMODULE| mathdef:: \xref{valid/types}{syntax-eexterndesc}{\K{core\_module}}
+
+
+.. |etypebound| mathdef:: \xref{valid/types}{syntax-etypebound}{\X{typebound}_e}
+.. |ETBEQ| mathdef:: \xref{valid/types}{syntax-etypebound}{\K{eq}}
+.. |ETBSUBR| mathdef:: \xref{valid/types}{syntax-etypebound}{\K{sub~resource}}
+
+.. |einstancetype| mathdef:: \xref{valid/types}{syntax-einstancetype}{\X{instancetype}_e}
+
+
+.. |eexterndecl| mathdef:: \xref{valid/types}{syntax-eexportdecl}{\X{externdecl}_e}
+.. |EEDDESC| mathdef:: \xref{valid/types}{syntax-eexportdecl}{\K{desc}}
+.. |EEDNAME| mathdef:: \xref{valid/types}{syntax-eexportdecl}{\K{name}}
+
+
+.. |ecomponenttype| mathdef:: \xref{valid/types}{syntax-ecomponenttype}{\X{componenttype}_e}
+
+.. |desc| mathdef:: \xref{valid/types}{syntax-desc}{\X{desc}}
+
+
+.. |edeftype| mathdef:: \xref{valid/types}{syntax-edeftype}{\X{deftype}_e}
+.. |EDTRESOURCE| mathdef:: \xref{valid/types}{syntax-edeftype}{\K{resource}}
+
+.. |rtidx| mathdef:: \X{rtidx}
+
+.. |eresourcetype| mathdef:: \xref{valid/types}{syntax-eresourcetype}{\X{resourcetype}_e}
+.. |ERTREP| mathdef:: \xref{valid/types}{syntax-eresourcetype}{\K{rep}}
+.. |ERTDTOR| mathdef:: \xref{valid/types}{syntax-eresourcetype}{\K{dtor}}
+
+.. |ecoreinstancetype| mathdef:: \xref{valid/types}{syntax-ecoreinstancetype}{\X{core{:}instancetype}_e}
+
+
+.. |ecoremoduletype| mathdef:: \xref{valid/types}{syntax-ecoremoduletype}{\X{core{:}moduletype}_e}
+
+
+.. |ecoredeftype| mathdef:: \xref{valid/types}{syntax-ecoredeftype}{\X{core{:}deftype}_e}
+
+
+.. |boundedtyvar| mathdef:: \xref{valid/types}{syntax-boundedtyvar}{\X{boundedtyvar}}
+
+.. |novalues| mathdef:: \xref{valid/types}{auxiliary-novalues}{\vdash^\mathsf{\mkern-20mu\neg v}}
+.. |lifinalize| mathdef:: \xref{valid/types}{auxiliary-ifinalize}{\langle\mkern-5mu\langle}
+.. |rifinalize| mathdef:: \xref{valid/types}{auxiliary-ifinalize}{\rangle\mkern-5mu\rangle}
+.. |lcfinalize| mathdef:: \xref{valid/types}{auxiliary-cfinalize}{\langle\mkern-5mu\langle}
+.. |rcfinalize| mathdef:: \xref{valid/types}{auxiliary-cfinalize}{\rangle\mkern-5mu\rangle}
+
+.. |norm#1| mathdef:: \lVert#1\rVert
+
+.. |kind| mathdef:: \xref{valid/types}{syntax-kind}{\X{kind}}
+
+.. |evaltypepos| mathdef:: {\xref{valid/types}{syntax-evaltypepos}{\mathit{\rho}}}
+.. |EVTPGENERAL| mathdef:: {\xref{valid/types}{syntax-evaltypepos}{\epsilon}}
+.. |EVTPPARAM| mathdef:: {\xref{valid/types}{syntax-evaltypepos}{\mathsf{p}}}
+
+.. |ifsub#-4| mathdef:: #3
+
+.. |vdashh#-1| mathdef:: \mathrel{\xref{!S!at!#1!valid/components!valid/types}{elaborate-#1}{\vdash}}
+.. |leadstoh#-1| mathdef:: \mathrel{\xref{!S!at!#1!valid/components!valid/types}{elaborate-#1}{\leadsto}}
+.. |dashvh#-1| mathdef:: \mathrel{\xref{!S!at!#1!valid/components!valid/types}{elaborate-#1}{\dashv}}
+.. |trelh#-1| mathdef:: \mathrel{\xref{!S!at!#1!valid/components!valid/types}{elaborate-#1}{:}}

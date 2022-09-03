@@ -1,0 +1,83 @@
+# Configuration file for the Sphinx documentation builder.
+#
+# This file only contains a selection of the most common options. For a full
+# list see the documentation:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
+
+# -- Path setup --------------------------------------------------------------
+
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute, like shown here.
+#
+import os
+import sys
+from datetime import date
+sys.path.insert(0, os.path.abspath('.'))
+
+
+# -- Project information -----------------------------------------------------
+
+name = 'WebAssembly Component Model'
+project = 'WebAssembly Component Model'
+title = 'WebAssembly Component Model Specification'
+copyright = '2022 WebAssembly Community Group'
+author = 'Authors of the Webassembly Component Model Specification'
+
+version = u'0.0'
+# The draft version string (clear out for release cuts)
+draft = ' (Draft ' + date.today().strftime("%Y-%m-%d") + ')'
+# The full version, including alpha/beta/rc tags.
+release = version + draft
+
+mathjax_path='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+
+# -- General configuration ---------------------------------------------------
+
+# Add any Sphinx extension module names here, as strings. They can be
+# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
+# ones.
+extensions = [
+  'sphinx.ext.mathjax',
+  'util.mathdef'
+]
+
+# Add any paths that contain templates here, relative to this directory.
+templates_path = ['_templates']
+
+# List of patterns, relative to source directory, that match files and
+# directories to ignore when looking for source files.
+# This pattern also affects html_static_path and html_extra_path.
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+
+# -- Options for HTML output -------------------------------------------------
+
+# The theme to use for HTML and HTML Help pages.  See the documentation for
+# a list of builtin themes.
+#
+html_theme = 'alabaster'
+html_theme_options = {
+  'description': 'WebAssembly Component Model Specification',
+  'fixed_sidebar': True,
+  'sidebar_width': '260px',
+  'sidebar_collapse': True,
+  'show_powered_by': False,
+  'extra_nav_links': {
+    'Index': 'BASEDIR/genindex.html',
+    'Download as PDF': 'BASEDIR/../_download/webassemblycomponentmodel.pdf'
+  },
+}
+html_title = project +u' ' + release
+html_copy_source = False # At least for the one included in docs/ ...
+
+# Add any paths that contain custom static files (such as style sheets) here,
+# relative to this directory. They are copied after the builtin static files,
+# so a file named "default.css" will overwrite the builtin "default.css".
+# html_static_path = ['_static']
+
+pwd = os.path.abspath('.')
+rst_prolog = """
+.. include:: /""" + pwd + """/util/macros-core.def
+.. include:: /""" + pwd + """/util/macros.def
+"""
