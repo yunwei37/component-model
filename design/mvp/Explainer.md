@@ -511,9 +511,9 @@ instancedecl  ::= core-prefix(<core:type>)
                 | <type>
                 | <alias>
                 | <exportdecl>
-importdecl    ::= (import <externname> bind-id(<externdesc>))
-exportdecl    ::= (export <externname> bind-id(<externdesc>))
-externdesc    ::= (<sort> (type <u32>) )
+importdecl    ::= (import <externname> bind-id(<externtype>))
+exportdecl    ::= (export <externname> bind-id(<externtype>))
+externtype    ::= (<sort> (type <u32>) )
                 | core-prefix(<core:moduletype>)
                 | <functype>
                 | <componenttype>
@@ -647,11 +647,11 @@ the precedent of [`core:typeuse`], the text format allows both references to
 out-of-line type definitions (via `(type <typeidx>)`) and inline type
 expressions that the text format desugars into out-of-line type definitions.
 
-The `value` case of `externdesc` describes a runtime value that is imported or
+The `value` case of `externtype` describes a runtime value that is imported or
 exported at instantiation time as described in the
 [start definitions](#start-definitions) section below.
 
-The `type` case of `externdesc` describes an imported or exported type along
+The `type` case of `externtype` describes an imported or exported type along
 with its "bound":
 
 The `sub` bound declares that the imported/exported type is an *abstract type*
@@ -1049,7 +1049,7 @@ two directions:
 Canonical definitions specify one of these two wrapping directions, the function
 to wrap and a list of configuration options:
 ```
-canon    ::= (canon lift core-prefix(<core:funcidx>) <canonopt>* bind-id(<externdesc>))
+canon    ::= (canon lift core-prefix(<core:funcidx>) <canonopt>* bind-id(<externtype>))
            | (canon lower <funcidx> <canonopt>* (core func <id>?))
 canonopt ::= string-encoding=utf8
            | string-encoding=utf16
@@ -1058,7 +1058,7 @@ canonopt ::= string-encoding=utf8
            | (realloc <core:funcidx>)
            | (post-return <core:funcidx>)
 ```
-While the production `externdesc` accepts any `sort`, the validation rules
+While the production `externtype` accepts any `sort`, the validation rules
 for `canon lift` would only allow the `func` sort. In the future, other sorts
 may be added (viz., types), hence the explicit sort.
 
@@ -1125,7 +1125,7 @@ Using canonical function definitions, we can finally write a non-trivial
 component that takes a string, does some logging, then returns a string.
 ```wasm
 (component
-  (import "wasi:logging" (instance $logging
+  (import "logging" (spec "wasi:logging") (instance $logging
     (export "log" (func (param string)))
   ))
   (import "libc" (core module $Libc
@@ -1298,14 +1298,15 @@ of core linear memory.
 
 Lastly, imports and exports are defined as:
 ```
-import     ::= (import <externname> bind-id(<externdesc>))
-export     ::= (export <id>? <externname> <sortidx> <externdesc>?)
-externname ::= <name> <URL>?
+import     ::= (import <externname> bind-id(<externtype>))
+export     ::= (export <id>? <externname> <sortidx> <externtype>?)
+externname ::= <name> <externdesc>
+externdesc ::= (spec <URL>)?
 ```
 Both import and export definitions append a new element to the index space of
 the imported/exported `sort` which can be optionally bound to an identifier in
 the text format. In the case of imports, the identifier is bound just like Core
-WebAssembly, as part of the `externdesc` (e.g., `(import "x" (func $iden))`).
+WebAssembly, as part of the `externtype` (e.g., `(import "x" (func $iden))`).
 In the case of exports, the `<id>?` right after the `export` is bound (the
 `<id>` inside the `<sortidx>` is a reference to the preceding definition being
 exported).
@@ -1313,7 +1314,7 @@ exported).
 Validation of `export` requires that all transitive uses of resource types in
 the types of exported functions or values refer to resources that were either
 imported or exported (concretely, via the type index introduced by an `import`
-or `export`). The optional `<externdesc>?` in `export` can be used to ascribe
+or `export`). The optional `<externtype>?` in `export` can be used to ascribe
 an equivalent-but-different type to an exported definition, allowing a private
 type definition to be replaced with a public (exported) type definition.
 
@@ -1338,6 +1339,7 @@ the standard [avoidance problem] that appears in module systems with abstract
 types. In particular, it ensures that a client of a component is able to
 externally define a type compatible with the exports of the component.
 
+TODO
 Components split the single externally-visible name of imports and exports into
 two sub-fields: a kebab-case `name` (as defined [above](#instance-definitions))
 and a `URL` (defined by the [URL Standard], noting that, in this URL Standard,
@@ -1419,14 +1421,14 @@ where the component subtyping simply ignores the `name` field when the `URL`
 field is present. For example, the component:
 ```
 (component
-  (import "fs" "wasi:filesystem" ...)
+  (import "fs" (spec "wasi:filesystem") ...)
 )
 ```
 can be supplied for the `x` import of the component:
 ```
 (component
   (import "x" (component
-    (import "filesystem" "wasi:filesystem" ...)
+    (import "filesystem" (spec "wasi:filesystem") ...)
   ))
 )
 ```
@@ -1452,9 +1454,9 @@ defined interfaces that map to instance types. This "World" definition then
 maps to the following component type:
 ```
 (component $Command
-  (import "fs" "wasi:filesystem" (instance ... filesystem function exports ...))
-  (import "console" "wasi:cli/console" (instance ... log function exports ...))
-  (export "main" "wasi:cli/main" (instance (export "main" (func ...))))
+  (import "fs" (spec "wasi:filesystem") (instance ... filesystem function exports ...))
+  (import "console" (spec "wasi:cli/console") (instance ... log function exports ...))
+  (export "main" (spec "wasi:cli/main") (instance (export "main" (func ...))))
 )
 ```
 A component *targeting* `wasi:cli/Command` would thus need to be a *subtype* of

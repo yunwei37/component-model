@@ -222,14 +222,14 @@ instancedecl  ::= 0x00 t:<core:type>                      => t
                 | 0x01 t:<type>                           => t
                 | 0x02 a:<alias>                          => a
                 | 0x04 ed:<exportdecl>                    => ed
-importdecl    ::= en:<externname> ed:<externdesc>         => (import en ed)
-exportdecl    ::= en:<externname> ed:<externdesc>         => (export en ed)
-externdesc    ::= 0x00 0x11 i:<core:typeidx>              => (core module (type i))
+importdecl    ::= en:<externname> et:<externtype>         => (import en et)
+exportdecl    ::= en:<externname> et:<externtype>         => (export en et)
+externtype    ::= 0x00 0x11 i:<core:typeidx>              => (core module (type i))
                 | 0x01 i:<typeidx>                        => (func (type i))
                 | 0x02 t:<valtype>                        => (value t)
                 | 0x03 b:<typebound>                      => (type b)
-                | 0x04 i:<typeidx>                        => (instance (type i))
-                | 0x05 i:<typeidx>                        => (component (type i))
+                | 0x04 i:<typeidx>                        => (component (type i))
+                | 0x05 i:<typeidx>                        => (instance (type i))
 typebound     ::= 0x00 i:<typeidx>                        => (eq i)
                 | 0x01                                    => (sub resource)
 ```
@@ -262,7 +262,7 @@ Notes:
   to resource types that are imported or exported.
 * The uniqueness validation rules for `externname` described below are also
   applied at the instance- and component-type level.
-* Validation of `externdesc` requires the various `typeidx` type constructors
+* Validation of `externtype` requires the various `typeidx` type constructors
   to match the preceding `sort`.
 * Validation of function parameter and result names, record field names,
   variant case names, flag names, and enum case names requires that the name be
@@ -324,9 +324,11 @@ flags are set.
 (See [Import and Export Definitions](Explainer.md#import-and-export-definitions)
 in the explainer.)
 ```
-import     ::= en:<externname> ed:<externdesc>                => (import en ed)
-export     ::= en:<externname> si:<sortidx> ed?:<externdesc>? => (export en si ed?)
-externname ::= n:<name> u?:<URL>?                             => n u?
+import     ::= en:<externname> et:<externtype>                => (import en et)
+export     ::= en:<externname> si:<sortidx> et?:<externtype>? => (export en si et?)
+externname ::= n:<name> ed:<externdesc>                       => n ed
+externdesc ::= 0x00                                           => ϵ
+             | 0x01 url:<URL>                                 => (spec url)
 URL        ::= b*:vec(byte)                                   => char(b)*, if char(b)* parses as a URL
 ```
 Notes:
@@ -337,10 +339,10 @@ Notes:
 * The "parses as a URL" condition is defined by executing the [basic URL
   parser] with `char(b)*` as *input*, no optional parameters and non-fatal
   validation errors (which coincides with definition of `URL` in JS and `rust-url`).
-* Validation requires any exported `sortidx` to have a valid `externdesc`
+* Validation requires any exported `sortidx` to have a valid `externtype`
   (which disallows core sorts other than `core module`). When the optional
-  `externdesc` immediate is present, validation requires it to be equal to
-  the inferred `externdesc` of the `sortidx` (where equality judges a type and
+  `externtype` immediate is present, validation requires it to be equal to
+  the inferred `externtype` of the `sortidx` (where equality judges a type and
   the `typeidx` of an export of that type (via `eq` or `sub`) equivalent).
 * The `name` fields of `externname` must be unique among imports and exports,
   respectively. The `URL` fields of `externname` (that are present) must
